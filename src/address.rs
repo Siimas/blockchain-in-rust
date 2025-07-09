@@ -13,7 +13,7 @@ impl Address {
     }
   }
 
-  pub fn get_signature(self) -> String {
+  pub fn get_signature(&self) -> String {
     "sig_x1".to_string()
   }
 }

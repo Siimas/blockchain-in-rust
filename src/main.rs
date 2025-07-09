@@ -1,4 +1,5 @@
-use crate::{address::Address, blockchain::Blockchain, utils::{colorize, Color, Effect}};
+use crate::{address::Address, block::Block, blockchain::Blockchain, utils::{colorize, io_input, Color, Effect}};
+use std::io;
 
 mod transaction;
 mod blockchain;
@@ -9,16 +10,47 @@ mod node;
 
 #[warn(unused_variables)] // ! DELETE
 
+// * This acts as a Node
 fn main() {
-
   let mut chain = Blockchain::new();
+  println!("{} {:?}", colorize("Genesis Block", Some(Color::YELLOW), Some(Effect::BOLD)), chain.blocks.last().unwrap());
 
-  let alice = Address::new("alice_pub");
-  let bob = Address::new("bob_pub");
+  let mut bob = Address::new("bob_pub");
 
-  println!("Genesis Block {:?}", chain.blocks.last().unwrap());
+  let mut option : String;
 
-  chain.new_transaction(10, bob, &alice.public);
-  println!("{} {:?}", colorize("New Transaction", Some(Color::GREEN), Some(Effect::BOLD)), chain.transaction_buffer.last());
+  loop {
+    println!("\nOptions:");
+    println!("  1 - New Transaction");
+    println!("  2 - Mine Block");
+    println!("  3 - View Chain");
+    println!("  0 - Exit");
+
+    option = io_input(">");
+
+    match option.trim() {
+      "0" => {
+        println!("\n{}", colorize("Exiting...", Some(Color::RED), Some(Effect::BOLD)));
+        break;
+      },
+      "1" => new_transaction_screen(&mut chain, &mut bob),
+      "2" => (),
+      "3" => (),
+      _ => (),
+    }
+
+    option.clear();
+  }
 
 }
+
+fn new_transaction_screen(chain: &mut Blockchain, sender_address: &mut Address) {
+  let amount = io_input("Amount");
+  let recipient_address = io_input("Recipient Address");
+    
+  let amount_parsed: u64 = amount.trim().parse().expect("Failed to parse amount as u64");
+
+  chain.new_transaction(amount_parsed, sender_address, &recipient_address);
+  println!("\n{} {:?}", colorize("New Transaction:", Some(Color::GREEN), Some(Effect::BOLD)), chain.transaction_buffer.last());
+}
+
