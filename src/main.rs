@@ -1,16 +1,19 @@
-use crate::{address::Address, block::Block, blockchain::Blockchain, utils::{colorize, io_input, Color, Effect}};
-use std::io;
+use crate::{blockchain::Blockchain, utils::{colorize, io_input, Color, Effect}};
 
 mod transaction;
 mod blockchain;
-mod address;
+mod wallet;
 mod block;
 mod utils;
 mod node;
 
 #[warn(unused_variables)] // ! DELETE
 
-// * This acts as a Node
+// Node:
+// - mantains a full or partial copy of the blockchain ledger
+// - verifies incoming transactions
+// - validates and mines blocks (consensus)
+// - relays transactions and blocks to other nodes
 fn main() {
   let mut chain = Blockchain::new();
   println!("{} {:?}", colorize("Genesis Block", Some(Color::YELLOW), Some(Effect::BOLD)), chain.blocks.last().unwrap());

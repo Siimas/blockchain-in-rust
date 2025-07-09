@@ -1,4 +1,3 @@
-use crate::address::Address;
 use crate::utils::{get_timestamp, calculate_object_hash};
 
 #[derive(Hash, Debug)]

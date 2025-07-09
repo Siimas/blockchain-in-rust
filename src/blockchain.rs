@@ -1,6 +1,4 @@
-use crate::{address::Address, block::Block, transaction::Transaction};
-
-
+use crate::{block::Block, transaction::Transaction};
 
 pub struct Blockchain {
   pub blocks : Vec<Block>,
