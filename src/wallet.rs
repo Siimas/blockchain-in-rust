@@ -27,7 +27,7 @@ pub struct Wallet {
 }
 
 impl Wallet {
-  pub fn new() -> Self {
+  /* pub fn new() -> Self {
     let private_key= PrivateKey(Vec::new());
     let public_key= PublicKey(Vec::new());
     let address = Address::from_public_key(&public_key); 
@@ -37,5 +37,5 @@ impl Wallet {
       public_key, 
       address,
     }
-  }
+  } */
 }

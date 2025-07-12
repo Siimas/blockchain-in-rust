@@ -2,12 +2,19 @@ use crate::utils::{get_timestamp, calculate_object_hash};
 
 #[derive(Hash, Debug)]
 pub struct Transaction {
-  id: u64, // Hash of the previous transaction
-  amount: u64,
-  sender_address: String,    // public key
-  recipient_address: String, // public key
-  signature: String,
-  timestamp: u64,
+  pub id: u64, // Hash of the previous transaction
+  pub amount: u64,
+  pub sender_address: String,    // public key
+  pub recipient_address: String, // public key
+  pub signature: String,
+  pub timestamp: u64,
+}
+
+pub enum TransactionValidationError {
+  InvalidSignature,
+  InsufficientFunds,
+  DoubleSpendAttempt,
+  GenericError(String),
 }
 
 impl Transaction {
@@ -32,7 +39,8 @@ impl Transaction {
     }
   }
 
-  pub fn validate() -> bool {
-    true
+  pub fn validate(&self) -> Result<(), TransactionValidationError> {
+    Err(TransactionValidationError::InsufficientFunds)
+    //Ok(())
   }
 }
