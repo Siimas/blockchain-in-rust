@@ -4,6 +4,5 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-k256 = { version = "0.13", features = ["ecdsa", "rand_core"] } # For secp256k1 keys and ECDSA
-rand_core = { version = "0.6", features = ["getrandom"] } # For cryptographically secure random number generation
-hex = "0.4" # For converting bytes to hex strings (useful for display/storage)
+k256 = "0.13.4"
+rand_core = "0.9.3"

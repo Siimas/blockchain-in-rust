@@ -1,4 +1,4 @@
-use crate::{colors::ColorizeExt, node::Node, transaction::Transaction, utils::{io_input}};
+use crate::{colors::ColorizeExt, node::Node, transaction::Transaction, utils::io_input, wallet::Wallet};
 
 mod transaction;
 mod wallet;
@@ -18,8 +18,9 @@ mod utils;
 fn main() {
   let mut node = Node::new();
 
+  let bob_wallet = Wallet::new();
+  
   let mut option : String;
-
   loop {
     println!("\nOptions:");
     println!("  1 - New Transaction");

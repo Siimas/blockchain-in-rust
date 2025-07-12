@@ -1,41 +1,30 @@
-pub struct PrivateKey(Vec<u8>);
-pub struct PublicKey(Vec<u8>);
-pub struct Address (String);
-
-impl PrivateKey {
-  pub fn generate_new() -> Self {
-    PrivateKey(Vec::new())
-  }
-}
-
-impl PublicKey {
-  pub fn from_private_key(private_key: &Vec<u8>) -> Self {
-    PublicKey(Vec::new())
-  }
-}
-
-impl Address {
-  pub fn from_public_key(public_key: &Vec<u8>) -> Self {
-    Address(String::new())
-  }
-}
+use k256::{ecdsa::{SigningKey, VerifyingKey}, elliptic_curve::rand_core::OsRng};
 
 pub struct Wallet {
-  private_key: PrivateKey,
-  public_key: PublicKey,
-  address: Address,
+  private_key: SigningKey,
+  public_key: VerifyingKey,
+  address: String,
 }
 
 impl Wallet {
-  /* pub fn new() -> Self {
-    let private_key= PrivateKey(Vec::new());
-    let public_key= PublicKey(Vec::new());
-    let address = Address::from_public_key(&public_key); 
-
+  pub fn new() -> Self {
+    let (private_key, public_key)= generate_key_pair();
+    let address = generate_address(&public_key); 
     Wallet{
       private_key,
-      public_key, 
+      public_key,
       address,
     }
-  } */
+  }
+}
+
+// TODO
+fn generate_address(public_key : &VerifyingKey) -> String {
+  String::from("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa")
+}
+
+fn generate_key_pair() -> (SigningKey, VerifyingKey) {
+  let signing_key = SigningKey::random(&mut OsRng);
+  let verifying_key = VerifyingKey::from(&signing_key);
+  (signing_key, verifying_key)
 }
